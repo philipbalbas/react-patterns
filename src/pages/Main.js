@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
 import { Demo } from '../styles'
 
-class Dropdown extends Component {
-  state = {
-    open: false
+class Counter extends Component {
+  state = { value: 0 }
+
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
   }
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
   }
 
   render() {
     return (
       <div>
-        <Toggle open={this.state.open} onClick={this.toggle} />
+        <p>{this.state.value}</p>
+        <Button add onClick={this.increment} />
+        <Button onClick={this.decrement} />
       </div>
     )
   }
@@ -24,7 +28,7 @@ class Dropdown extends Component {
 const Main = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown />
+    <Counter />
   </Demo>
 )
 

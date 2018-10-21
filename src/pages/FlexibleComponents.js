@@ -1,46 +1,55 @@
 import React, { Component, createContext } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { Demo } from '../styles'
 
-const DropdownContext = createContext()
+const CounterContext = createContext()
 
-class Dropdown extends Component {
-  static Menu = () => (
-    <DropdownContext.Consumer>
-      {({ open }) => open && <Menu>Menu</Menu>}
-    </DropdownContext.Consumer>
+class Counter extends Component {
+  static View = () => (
+    <CounterContext.Consumer>
+      {({ value }) => <p>{value}</p>}
+    </CounterContext.Consumer>
   )
-  static Button = () => (
-    <DropdownContext.Consumer>
-      {({ open, toggle }) => <Toggle open={open} onClick={toggle} />}
-    </DropdownContext.Consumer>
+  static Increment = () => (
+    <CounterContext.Consumer>
+      {({ increment }) => <Button add onClick={increment} />}
+    </CounterContext.Consumer>
   )
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  static Decrement = () => (
+    <CounterContext.Consumer>
+      {({ decrement }) => <Button onClick={decrement} />}
+    </CounterContext.Consumer>
+  )
+
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
   }
 
-  state = { open: false, toggle: this.toggle }
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
+  }
+
+  state = { value: 0, increment: this.increment, decrement: this.decrement }
 
   render() {
     const { children } = this.props
     return (
-      <DropdownStyle>
-        <DropdownContext.Provider value={this.state}>
-          {children}
-        </DropdownContext.Provider>
-      </DropdownStyle>
+      <CounterContext.Provider value={this.state}>
+        {children}
+      </CounterContext.Provider>
     )
   }
 }
 const FlexibleComponents = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown>
-      <Dropdown.Button />
-      <Dropdown.Menu />
-    </Dropdown>
+    <Counter>
+      <Counter.View />
+      <Counter.Increment />
+      <Counter.Decrement />
+    </Counter>
   </Demo>
 )
 

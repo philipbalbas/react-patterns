@@ -11,17 +11,17 @@ export { swiss as theme } from 'mdx-deck/themes'
 
 ### Before
 ```
-<Dropdown>
+<Counter>
   {open && <Menu />}
   <Button onClick={onClick} />
-</Dropdown>
+</Counter>
 ```
 ### After
 ```
-<Dropdown>
-  <Dropdown.Menu />
-  <Dropdown.Button />
-</Dropdown>
+<Counter>
+  <Counter.Menu />
+  <Counter.Button />
+</Counter>
 ```
 
 --- 
@@ -54,7 +54,7 @@ export { swiss as theme } from 'mdx-deck/themes'
 
 ```
 <div>
-  <Toggle open={open} {...togglerProps} />
+  <Button open={open} {...togglerProps} />
   <button {...togglerProps} onClick={() => console.log(clicked)} >Click here</button>
   {open && <Menu>Menu</Menu>}
 </div>

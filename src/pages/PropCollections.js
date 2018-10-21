@@ -1,43 +1,51 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { Demo } from '../styles'
 
-class Dropdown extends Component {
-  state = { open: false }
+class Counter extends Component {
+  state = { value: 0 }
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
+  }
+
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
   }
 
   getStateAndHelpers() {
     return {
-      open: this.state.open,
-      togglerProps: {
-        'aria-expanded': this.state.open,
-        onClick: this.toggle
+      value: this.state.value,
+      incrementProps: {
+        onClick: this.increment,
+        add: true
+      },
+      decrementProps: {
+        onClick: this.decrement,
+        add: false
       }
     }
   }
 
   render() {
     const { children } = this.props
-    return <DropdownStyle>{children(this.getStateAndHelpers())}</DropdownStyle>
+    return children(this.getStateAndHelpers())
   }
 }
 
 const PropCollections = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown>
-      {({ open, togglerProps }) => (
+    <Counter>
+      {({ value, incrementProps, decrementProps }) => (
         <div>
-          <Toggle open={open} {...togglerProps} />
-          <button {...togglerProps}>Click here</button>
-          {open && <Menu>Menu</Menu>}
+          <Button {...incrementProps} />
+          <Button {...decrementProps} />
+          <p>{value}</p>
         </div>
       )}
-    </Dropdown>
+    </Counter>
   </Demo>
 )
 

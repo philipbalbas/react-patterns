@@ -26,7 +26,7 @@ export const Logo = styled.img`
   height: 60px;
 `
 
-export const DropdownStyle = styled.div`
+export const CounterStyle = styled.div`
   position: relative;
 `
 

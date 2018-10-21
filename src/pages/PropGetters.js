@@ -1,24 +1,32 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { CounterStyle, Menu, Demo } from '../styles'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
-class Dropdown extends Component {
-  state = { open: false }
+class Counter extends Component {
+  state = { value: 0 }
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
+  }
+
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
   }
 
   getStateAndHelpers() {
     return {
-      open: this.state.open,
-      toggle: this.toggle,
-      getTogglerProps: ({ onClick, ...props } = {}) => ({
-        'aria-expanded': this.state.on,
-        onClick: callAll(onClick, this.toggle),
+      value: this.state.value,
+      getIncrementProps: ({ onClick, ...props } = {}) => ({
+        add: true,
+        onClick: callAll(onClick, this.increment),
+        ...props
+      }),
+      getDecrementProps: ({ onClick, ...props } = {}) => ({
+        add: false,
+        onClick: callAll(onClick, this.decrement),
         ...props
       })
     }
@@ -26,26 +34,24 @@ class Dropdown extends Component {
 
   render() {
     const { children } = this.props
-    return <DropdownStyle>{children(this.getStateAndHelpers())}</DropdownStyle>
+    return children(this.getStateAndHelpers())
   }
 }
 
 const PropGetters = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown>
-      {({ open, getTogglerProps }) => (
+    <Counter>
+      {({ value, getIncrementProps, getDecrementProps }) => (
         <div>
-          <Toggle open={open} {...getTogglerProps()} />
-          <button
-            {...getTogglerProps({ onClick: () => console.log('clicked') })}
-          >
-            Click here
-          </button>
-          {open && <Menu>Menu</Menu>}
+          <Button {...getIncrementProps()} />
+          <Button
+            {...getDecrementProps({ onClick: () => console.log('clicked') })}
+          />
+          <p>{value}</p>
         </div>
       )}
-    </Dropdown>
+    </Counter>
   </Demo>
 )
 

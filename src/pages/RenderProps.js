@@ -1,36 +1,40 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { Demo } from '../styles'
 
-class Dropdown extends Component {
-  state = { open: false }
+class Counter extends Component {
+  state = { value: 0 }
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
+  }
+
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
   }
 
   render() {
     const { children } = this.props
-    return (
-      <DropdownStyle>
-        {children({ open: this.state.open, toggle: this.toggle })}
-      </DropdownStyle>
-    )
+    return children({
+      value: this.state.value,
+      increment: this.increment,
+      decrement: this.decrement
+    })
   }
 }
 const RenderProps = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown>
-      {({ toggle, open }) => (
+    <Counter>
+      {({ value, increment, decrement }) => (
         <div>
-          <Toggle open={open} onClick={toggle} />
-          <button onClick={toggle}>Click here</button>
-          {open && <Menu>Menu</Menu>}
+          <Button add onClick={increment} />
+          <Button onClick={decrement} />
+          <p>{value}</p>
         </div>
       )}
-    </Dropdown>
+    </Counter>
   </Demo>
 )
 

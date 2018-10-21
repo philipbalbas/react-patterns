@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { CounterStyle, Menu, Demo } from '../styles'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
-class Dropdown extends Component {
+class Counter extends Component {
   static defaultProps = {
-    open: false
+    initialValue: 0
   }
 
-  initialState = { open: this.props.initialOpen }
+  initialState = { value: this.props.initialValue }
 
   state = this.initialState
 
@@ -26,25 +26,30 @@ class Dropdown extends Component {
     }, callback)
   }
 
-  toggle = () => {
-    this.internalSetState(
-      state => ({ open: !state.open }),
-      () => this.props.onToggle()
-    )
+  increment = () => {
+    this.internalSetState({ type: 'INCREMENT' })
+  }
+
+  decrement = () => {
+    this.internalSetState({ type: 'DECREMENT' })
   }
 
   reset = () => {
-    this.internalSetState(this.initialState, () => this.props.onReset())
+    this.internalSetState({ type: 'RESET' })
   }
 
   getStateAndHelpers() {
     return {
-      open: this.state.open,
-      toggle: this.toggle,
+      value: this.state.value,
       reset: this.reset,
-      getTogglerProps: ({ onClick, ...props } = {}) => ({
-        'aria-expanded': this.state.on,
-        onClick: callAll(onClick, this.toggle),
+      getIncrementProps: ({ onClick, ...props } = {}) => ({
+        add: true,
+        onClick: callAll(onClick, this.increment),
+        ...props
+      }),
+      getDecrementProps: ({ onClick, ...props } = {}) => ({
+        add: false,
+        onClick: callAll(onClick, this.decrement),
         ...props
       })
     }
@@ -52,59 +57,49 @@ class Dropdown extends Component {
 
   render() {
     const { children } = this.props
-    return <DropdownStyle>{children(this.getStateAndHelpers())}</DropdownStyle>
+    return children(this.getStateAndHelpers())
   }
 }
 
 class StateReducer extends Component {
-  initialState = { timesClicked: 0 }
+  initialState = { value: 0 }
 
-  state = this.initialState
+  counterStateReducer = (state, changes) => {
+    switch (changes.type) {
+      case 'INCREMENT': {
+        if (state.value >= 5) {
+          return state
+        }
+        return { value: state.value + 1 }
+      }
 
-  toggleStateReducer = (state, changes) => {
-    if (this.state.timesClicked >= 4) {
-      return { ...changes, open: false }
+      case 'DECREMENT': {
+        return { value: state.value - 1 }
+      }
+
+      case 'RESET': {
+        return this.initialState
+      }
+
+      default:
+        return state
     }
-    return changes
-  }
-
-  handleToggle = () => {
-    this.setState(({ timesClicked }) => ({ timesClicked: timesClicked + 1 }))
-  }
-
-  handleReset = () => {
-    this.setState(this.initialState)
   }
 
   render() {
-    const { timesClicked } = this.state
     return (
       <Demo>
         <h1>{this.props.title}</h1>
-        <Dropdown
-          initialOpen={true}
-          stateReducer={this.toggleStateReducer}
-          onToggle={this.handleToggle}
-          onReset={this.handleReset}
-        >
-          {({ open, reset, getTogglerProps }) => (
+        <Counter stateReducer={this.counterStateReducer}>
+          {({ value, reset, getIncrementProps, getDecrementProps }) => (
             <div>
-              {timesClicked > 4 ? (
-                <div>You clicked too much</div>
-              ) : timesClicked > 0 ? (
-                <div>Click cound: {timesClicked}</div>
-              ) : null}
-              <Toggle open={open} {...getTogglerProps()} />
-              <button
-                {...getTogglerProps({ onClick: () => console.log('clicked') })}
-              >
-                Click here
-              </button>
+              <Button {...getIncrementProps()} />
+              <Button {...getDecrementProps()} />
               <button onClick={reset}>Reset</button>
-              {open && <Menu>Menu</Menu>}
+              <p>{value}</p>
             </div>
           )}
-        </Dropdown>
+        </Counter>
       </Demo>
     )
   }

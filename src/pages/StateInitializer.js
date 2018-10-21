@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { CounterStyle, Menu, Demo } from '../styles'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
-class Dropdown extends Component {
+class Counter extends Component {
   static defaultProps = {
-    open: false
+    initialValue: 0
   }
 
-  initialState = { open: this.props.initialOpen }
+  initialState = { value: this.props.initialValue }
 
   state = this.initialState
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
+  }
+
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
   }
 
   reset = () => {
@@ -24,12 +28,16 @@ class Dropdown extends Component {
 
   getStateAndHelpers() {
     return {
-      open: this.state.open,
-      toggle: this.toggle,
+      value: this.state.value,
       reset: this.reset,
-      getTogglerProps: ({ onClick, ...props } = {}) => ({
-        'aria-expanded': this.state.on,
-        onClick: callAll(onClick, this.toggle),
+      getIncrementProps: ({ onClick, ...props } = {}) => ({
+        add: true,
+        onClick: callAll(onClick, this.increment),
+        ...props
+      }),
+      getDecrementProps: ({ onClick, ...props } = {}) => ({
+        add: false,
+        onClick: callAll(onClick, this.decrement),
         ...props
       })
     }
@@ -37,27 +45,23 @@ class Dropdown extends Component {
 
   render() {
     const { children } = this.props
-    return <DropdownStyle>{children(this.getStateAndHelpers())}</DropdownStyle>
+    return children(this.getStateAndHelpers())
   }
 }
 
 const StateInitializer = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown initialOpen={true}>
-      {({ open, reset, getTogglerProps }) => (
+    <Counter initialValue={100}>
+      {({ value, reset, getIncrementProps, getDecrementProps }) => (
         <div>
-          <Toggle open={open} {...getTogglerProps()} />
-          <button
-            {...getTogglerProps({ onClick: () => console.log('clicked') })}
-          >
-            Click here
-          </button>
+          <Button {...getIncrementProps()} />
+          <Button {...getDecrementProps()} />
           <button onClick={reset}>Reset</button>
-          {open && <Menu>Menu</Menu>}
+          <p>{value}</p>
         </div>
       )}
-    </Dropdown>
+    </Counter>
   </Demo>
 )
 

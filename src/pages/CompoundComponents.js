@@ -1,39 +1,42 @@
 import React, { Component } from 'react'
-import Toggle from '../Toggle'
+import Button from '../Button'
 
-import { DropdownStyle, Menu, Demo } from '../styles'
+import { Demo } from '../styles'
 
-class Dropdown extends Component {
-  static Menu = ({ open }) => open && <Menu>Menu</Menu>
-  static Button = ({ open, toggle }) => <Toggle open={open} onClick={toggle} />
+class Counter extends Component {
+  static View = ({ value }) => <p>{value}</p>
+  static Increment = ({ increment }) => <Button add onClick={increment} />
+  static Decrement = ({ decrement }) => <Button onClick={decrement} />
 
-  state = { open: false }
+  state = { value: 0 }
 
-  toggle = () => {
-    this.setState(state => ({ open: !state.open }))
+  increment = () => {
+    this.setState(state => ({ value: state.value + 1 }))
+  }
+
+  decrement = () => {
+    this.setState(state => ({ value: state.value - 1 }))
   }
 
   render() {
     const { children } = this.props
-    return (
-      <DropdownStyle>
-        {React.Children.map(children, child =>
-          React.cloneElement(child, {
-            open: this.state.open,
-            toggle: this.toggle
-          })
-        )}
-      </DropdownStyle>
+    return React.Children.map(children, child =>
+      React.cloneElement(child, {
+        value: this.state.value,
+        increment: this.increment,
+        decrement: this.decrement
+      })
     )
   }
 }
 const CompoundComponents = props => (
   <Demo>
     <h1>{props.title}</h1>
-    <Dropdown>
-      <Dropdown.Button />
-      <Dropdown.Menu />
-    </Dropdown>
+    <Counter>
+      <Counter.View />
+      <Counter.Increment />
+      <Counter.Decrement />
+    </Counter>
   </Demo>
 )
 
