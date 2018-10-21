@@ -1,0 +1,64 @@
+export { swiss as theme } from 'mdx-deck/themes'
+
+
+# This is the title of my deck
+
+---
+
+## Compound Components
+
+- Allows passing of implicit state to child components
+
+### Before
+```
+<Dropdown>
+  {open && <Menu />}
+  <Button onClick={onClick} />
+</Dropdown>
+```
+### After
+```
+<Dropdown>
+  <Dropdown.Menu />
+  <Dropdown.Button />
+</Dropdown>
+```
+
+--- 
+
+## Context 
+
+- Provides a way to pass data through the component tree without having to pass props down manually at every level
+- Allows sharing of "global" data to components
+
+---
+
+## Render Props
+
+- Allows developer to choose how they want to render a component
+- Component is in handles state, parent handles rendering
+
+--- 
+
+## Prop Collection
+
+- Used in conjunction with render props
+- Allows passing of multiple props to relevant components that need them
+
+--- 
+
+## Prop Getters
+
+- Prevents overwriting handlers that prop collections can't handle
+
+
+```
+<div>
+  <Toggle open={open} {...togglerProps} />
+  <button {...togglerProps} onClick={() => console.log(clicked)} >Click here</button>
+  {open && <Menu>Menu</Menu>}
+</div>
+```
+
+## State Reducer
+
