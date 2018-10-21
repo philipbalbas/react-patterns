@@ -30,32 +30,38 @@ class Counter extends Component {
   }
 }
 
+function withCounter(Component) {
+  function Wrapper(props) {
+    return (
+      <CounterContext.Consumer>
+        {counterContext => <Component context={counterContext} {...props} />}
+      </CounterContext.Consumer>
+    )
+  }
+  Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
+  return Wrapper
+}
+
 const Layer1 = () => <Layer2 />
-const Layer2 = () => (
-  <CounterContext.Consumer>
-    {({ value }) => (
-      <>
-        <p>{value}</p>
-        <Layer3 />
-      </>
-    )}
-  </CounterContext.Consumer>
-)
+
+const Layer2 = withCounter(({ context: { value } }) => (
+  <>
+    <p>{value}</p>
+    <Layer3 />
+  </>
+))
+
 const Layer3 = () => <Layer4 />
 
-const Layer4 = () => (
-  <CounterContext.Consumer>
-    {({ value, increment, decrement }) => (
-      <>
-        <div>
-          <Button add onClick={increment} />
-          <Button onClick={decrement} />
-        </div>
-        <p>{value}</p>
-      </>
-    )}
-  </CounterContext.Consumer>
-)
+const Layer4 = withCounter(({ context: { value, increment, decrement } }) => (
+  <>
+    <div>
+      <Button add onClick={increment} />
+      <Button onClick={decrement} />
+    </div>
+    <p>{value}</p>
+  </>
+))
 
 const Provider = props => (
   <Demo>

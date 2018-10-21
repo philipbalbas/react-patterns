@@ -20,12 +20,16 @@ class Counter extends Component {
 
   render() {
     const { children } = this.props
-    return React.Children.map(children, child =>
-      React.cloneElement(child, {
-        value: this.state.value,
-        increment: this.increment,
-        decrement: this.decrement
-      })
+    return (
+      <div>
+        {React.Children.map(children, child =>
+          React.cloneElement(child, {
+            value: this.state.value,
+            increment: this.increment,
+            decrement: this.decrement
+          })
+        )}
+      </div>
     )
   }
 }

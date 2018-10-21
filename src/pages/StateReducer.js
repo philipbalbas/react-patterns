@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 
-import { CounterStyle, Menu, Demo } from '../styles'
+import { Demo } from '../styles'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 

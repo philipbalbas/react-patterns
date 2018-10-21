@@ -37,7 +37,7 @@ class Counter extends Component {
     const { children } = this.props
     return (
       <CounterContext.Provider value={this.state}>
-        {children}
+        <div>{children}</div>
       </CounterContext.Provider>
     )
   }
@@ -46,9 +46,9 @@ const FlexibleComponents = props => (
   <Demo>
     <h1>{props.title}</h1>
     <Counter>
-      <Counter.View />
       <Counter.Increment />
       <Counter.Decrement />
+      <Counter.View />
     </Counter>
   </Demo>
 )

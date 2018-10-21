@@ -10,7 +10,9 @@ import PropCollections from './pages/PropCollections'
 import PropGetters from './pages/PropGetters'
 import StateInitializer from './pages/StateInitializer'
 import StateReducer from './pages/StateReducer'
-// import StateInitializer from './pages/StateInitializer'
+import ControlProps from './pages/ControlProps'
+import Provider from './pages/Provider'
+import HigherOrderComponent from './pages/HigherOrderComponent'
 
 class App extends Component {
   render() {
@@ -35,6 +37,12 @@ class App extends Component {
             title="State Initializer"
           />
           <StateReducer path="/state-reducer" title="State Reducer" />
+          <ControlProps path="/control-props" title="Control Props" />
+          <Provider path="/provider" title="Provider" />
+          <HigherOrderComponent
+            path="/higher-order-component"
+            title="Higher Order Component"
+          />
         </Router>
       </div>
     )

@@ -26,12 +26,6 @@ export { swiss as theme } from 'mdx-deck/themes'
 
 --- 
 
-## Context 
-
-- Provides a way to pass data through the component tree without having to pass props down manually at every level
-- Allows sharing of "global" data to components
-
----
 
 ## Render Props
 
@@ -51,7 +45,7 @@ export { swiss as theme } from 'mdx-deck/themes'
 
 - Prevents overwriting handlers that prop collections can't handle
 
-
+### Problem
 ```
 <div>
   <Button open={open} {...togglerProps} />
@@ -60,5 +54,20 @@ export { swiss as theme } from 'mdx-deck/themes'
 </div>
 ```
 
+--- 
+
 ## State Reducer
 
+- Adopted from reason-react
+- While render props controls how UI is rendered, state reducers controls state logic
+
+---
+
+
+
+## Provider 
+
+- Provides a way to pass data through the component tree without having to pass props down manually at every level
+- Allows sharing of "global" data to components
+
+---

@@ -34,10 +34,13 @@ export default class Navbar extends Component {
             <Link to="/state-reducer">State Reducer</Link>
           </NavLink>
           <NavLink>
+            <Link to="/control-props">Control Props</Link>
+          </NavLink>
+          <NavLink>
             <Link to="/provider">Provider</Link>
           </NavLink>
           <NavLink>
-            <Link to="/portal">Portal</Link>
+            <Link to="/higher-order-component">Higher Order Component</Link>
           </NavLink>
         </LinkGroup>
       </NavbarStyle>
