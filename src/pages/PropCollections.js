@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 
-import { Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 class Counter extends Component {
   state = { value: 0 }
@@ -42,7 +42,7 @@ const PropCollections = props => (
         <div>
           <Button {...incrementProps} />
           <Button {...decrementProps} />
-          <p>{value}</p>
+          <View>{value}</View>
         </div>
       )}
     </Counter>

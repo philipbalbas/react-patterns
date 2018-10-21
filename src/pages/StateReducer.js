@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 
-import { Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
@@ -96,7 +96,7 @@ class StateReducer extends Component {
               <Button {...getIncrementProps()} />
               <Button {...getDecrementProps()} />
               <button onClick={reset}>Reset</button>
-              <p>{value}</p>
+              <View>{value}</View>
             </div>
           )}
         </Counter>

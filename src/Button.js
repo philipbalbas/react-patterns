@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const ButtonStyle = styled.button`
-  padding: 1rem;
+  /* padding: 1rem; */
+  height: 50px;
+  width: 50px;
   background: ${props => (props.add ? '#2d92ec' : '#e74c3c')};
   border: none;
   color: white;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 
-import { CounterStyle, Menu, Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
@@ -58,7 +58,7 @@ const StateInitializer = props => (
           <Button {...getIncrementProps()} />
           <Button {...getDecrementProps()} />
           <button onClick={reset}>Reset</button>
-          <p>{value}</p>
+          <View>{value}</View>
         </div>
       )}
     </Counter>

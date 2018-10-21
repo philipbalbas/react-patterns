@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 
-import { Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 class Counter extends Component {
   state = { value: 0 }
@@ -17,7 +17,7 @@ class Counter extends Component {
   render() {
     return (
       <div>
-        <p>{this.state.value}</p>
+        <View>{this.state.value}</View>
         <Button add onClick={this.increment} />
         <Button onClick={this.decrement} />
       </div>

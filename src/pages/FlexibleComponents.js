@@ -1,14 +1,14 @@
 import React, { Component, createContext } from 'react'
 import Button from '../Button'
 
-import { Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 const CounterContext = createContext()
 
 class Counter extends Component {
   static View = () => (
     <CounterContext.Consumer>
-      {({ value }) => <p>{value}</p>}
+      {({ value }) => <View>{value}</View>}
     </CounterContext.Consumer>
   )
   static Increment = () => (

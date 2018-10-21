@@ -9,6 +9,17 @@ export const Demo = styled.div`
   align-items: center;
 `
 
+export const View = styled.div`
+  background: lightgray;
+  border-radius: 5px;
+  height: 35px;
+  font-size: 20px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 export const NavbarStyle = styled.div`
   border-bottom: 1px solid rgba(144, 144, 144, 0.24);
   position: sticky;

@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react'
 import Button from '../Button'
 
-import { Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 const CounterContext = createContext()
 
@@ -51,7 +51,7 @@ const Layer4 = () => (
           <Button add onClick={increment} />
           <Button onClick={decrement} />
         </div>
-        <p>{value}</p>
+        <View>{value}</View>
       </>
     )}
   </CounterContext.Consumer>

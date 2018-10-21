@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 
-import { Demo } from '../styles'
+import { Demo, View } from '../styles'
 
 class Counter extends Component {
-  static View = ({ value }) => <p>{value}</p>
+  static View = ({ value }) => <View>{value}</View>
   static Increment = ({ increment }) => <Button add onClick={increment} />
   static Decrement = ({ decrement }) => <Button onClick={decrement} />
 

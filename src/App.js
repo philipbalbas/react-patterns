@@ -20,7 +20,7 @@ class App extends Component {
       <div>
         <Navbar />
         <Router>
-          <Main path="/" title="React Patterns & Anti-Patterns" />
+          <Main path="/" title="React Patterns" />
           <CompoundComponents
             path="/compound-components"
             title="Compound Components"
